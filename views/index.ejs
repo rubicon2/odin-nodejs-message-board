@@ -3,7 +3,6 @@
 <%- include('partials/head') %>
 <body>
   <% messages.forEach((message) => { %>
-    <% console.log(message.added) %>
     <h3><%= message.user %></h3>
     <small><%= message.added.toDateString() %></small>
     <p><%= message.text %></p>
