@@ -2,6 +2,7 @@
 <html lang="en">
 <%- include('partials/head') %>
 <body>
+  <%- include('partials/nav') %>
   <% messages.forEach((message) => { %>
     <h3><%= message.user %></h3>
     <small><%= message.added.toDateString() %></small>
