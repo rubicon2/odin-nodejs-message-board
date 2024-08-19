@@ -16,7 +16,13 @@ function getIndex(req, res) {
 }
 
 function getNew(req, res) {
-  res.send('Got new!');
+  res.render('form', { title: 'Mini Messageboard' });
 }
 
-module.exports = { getIndex, getNew };
+function postNew(req, res) {
+  const { user, text } = req.body;
+  messages.push({ user, text, added: new Date() });
+  res.redirect('/');
+}
+
+module.exports = { getIndex, getNew, postNew };
