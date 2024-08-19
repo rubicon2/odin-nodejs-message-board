@@ -4,9 +4,11 @@
 <body>
   <%- include('partials/nav') %>
   <% messages.forEach((message) => { %>
-    <h3><%= message.user %></h3>
-    <small><%= message.added.toDateString() %></small>
-    <p><%= message.text %></p>
+    <a href=<%= `/messages/${message.id}` %>>
+      <h3><%= message.user %></h3>
+      <small><%= message.added.toDateString() %></small>
+      <p><%= message.text %></p>
+    </a>
   <% }) %>
 </body>
 </html>
