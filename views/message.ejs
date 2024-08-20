@@ -4,9 +4,9 @@
 <body>
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding message-content">
-    <h2><%= message.user %></h2>
-    <small><%= message.added.toDateString() %></small>
-    <p><%= message.text %></p>
+    <h2 class="message-content__user"><%= message.user %></h2>
+    <div class="message-content__added"><%= message.added.toDateString() %></div>
+    <p class="message-content__text"><%= message.text %></p>
   </div>
 </body>
 </html>
