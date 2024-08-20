@@ -48,10 +48,18 @@ button {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 500px) {
+  .main-nav-background .main-nav-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
 .main-nav-background .main-nav-content h1 {
   font-size: 2rem;
 }
 .main-nav-background .main-nav-content ul {
+  padding: 0;
   display: flex;
   gap: 1.5em;
   list-style: none;
