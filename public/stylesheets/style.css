@@ -60,7 +60,7 @@ a {
   grid-auto-rows: min-content;
   gap: 1.5rem;
 }
-.index-content a {
+.index-content .index__message-link {
   text-decoration: none;
   color: var(--dark-color);
 }

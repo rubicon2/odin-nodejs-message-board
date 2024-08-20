@@ -6,7 +6,7 @@
   <div class="index-background">
     <div class="container std-vertical-padding index-content">
       <% messages.forEach((message) => { %>
-        <a class="index__message_link" href=<%= `/messages/${message.id}` %>>
+        <a class="index__message-link" href=<%= `/messages/${message.id}` %>>
           <h2><%= message.user %></h2>
           <div><%= message.added.toDateString() %></div>
           <p><%= message.text %></p>
