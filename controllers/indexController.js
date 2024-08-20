@@ -5,13 +5,13 @@ const messages = [
     id: uuid(),
     text: 'Hi there!',
     user: 'Jacqueline',
-    added: new Date(),
+    added: new Date('01-01-2024'),
   },
   {
     id: uuid(),
     text: 'I have no interest in you whatsoever.',
     user: 'Miho',
-    added: new Date(),
+    added: new Date('03-13-2024'),
   },
 ];
 
