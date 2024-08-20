@@ -73,6 +73,23 @@ a {
     color: var(--dark-color);
   }
 
+  .index__message-user {
+    font-size: 1.4rem;
+    color: var(--dark-color);
+  }
+
+  .index__message-added {
+    color: var(--dark-color);
+    font-size: 0.95rem;
+    font-weight: 400;
+    padding-bottom: 0.2rem;
+  }
+
+  .index__message-text {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
   hr {
     border-color: var(--light-color);
   }

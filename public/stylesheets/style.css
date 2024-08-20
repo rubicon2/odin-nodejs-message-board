@@ -64,6 +64,20 @@ a {
   text-decoration: none;
   color: var(--dark-color);
 }
+.index-content .index__message-user {
+  font-size: 1.4rem;
+  color: var(--dark-color);
+}
+.index-content .index__message-added {
+  color: var(--dark-color);
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding-bottom: 0.2rem;
+}
+.index-content .index__message-text {
+  font-size: 1rem;
+  font-weight: 300;
+}
 .index-content hr {
   border-color: var(--light-color);
 }

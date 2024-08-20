@@ -7,9 +7,9 @@
     <div class="container std-vertical-padding index-content">
       <% messages.forEach((message) => { %>
         <a class="index__message-link" href=<%= `/messages/${message.id}` %>>
-          <h2><%= message.user %></h2>
-          <div><%= message.added.toDateString() %></div>
-          <p><%= message.text %></p>
+          <h2 class="index__message-user"><%= message.user %></h2>
+          <div class="index__message-added"><%= message.added.toDateString() %></div>
+          <p class="index__message-text"><%= message.text %></p>
         </a>
         <hr />
       <% }) %>
