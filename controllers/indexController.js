@@ -22,7 +22,10 @@ const messages = [
 ];
 
 function getIndex(req, res) {
-  res.render('index', { messages, title: 'Mini Messageboard' });
+  const newestFirst = messages.sort(
+    (a, b) => b.added.getTime() - a.added.getTime(),
+  );
+  res.render('index', { messages: newestFirst, title: 'Mini Messageboard' });
 }
 
 function getMessage(req, res, next) {
