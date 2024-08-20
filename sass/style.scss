@@ -1,0 +1,79 @@
+// || Basic styling
+:root {
+  font-family: 'Open Sans', sans-serif;
+  --dark-color: #3f3f3f;
+  --light-color: #f7f7f7;
+  --accent-color: #ce60a9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+a {
+  cursor: pointer;
+}
+
+// || Reusable classes
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.std-vertical-padding {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+// || Specific classes
+.main-nav-background {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+
+  .main-nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    ul {
+      display: flex;
+      gap: 1.5em;
+      list-style: none;
+
+      a {
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+          filter: brightness(0.7);
+        }
+      }
+    }
+  }
+}
+
+.index-content {
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: 1.5rem;
+
+  a {
+    text-decoration: none;
+    color: var(--dark-color);
+  }
+
+  hr {
+    border-color: var(--light-color);
+  }
+}

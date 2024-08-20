@@ -3,8 +3,10 @@
 <%- include('partials/head') %>
 <body>
   <%- include('partials/nav') %>
-  <h2><%= message.user %></h2>
-  <small><%= message.added.toDateString() %></small>
-  <p><%= message.text %></p>
+  <div class="container std-vertical-padding message-content">
+    <h2><%= message.user %></h2>
+    <small><%= message.added.toDateString() %></small>
+    <p><%= message.text %></p>
+  </div>
 </body>
 </html>

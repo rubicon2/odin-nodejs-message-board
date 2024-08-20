@@ -1,0 +1,71 @@
+:root {
+  font-family: "Open Sans", sans-serif;
+  --dark-color: #3f3f3f;
+  --light-color: #f7f7f7;
+  --accent-color: #ce60a9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Oswald", sans-serif;
+}
+
+a {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.std-vertical-padding {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.main-nav-background {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+}
+.main-nav-background .main-nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-nav-background .main-nav-content h1 {
+  font-size: 2rem;
+}
+.main-nav-background .main-nav-content ul {
+  display: flex;
+  gap: 1.5em;
+  list-style: none;
+}
+.main-nav-background .main-nav-content ul a {
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+}
+.main-nav-background .main-nav-content ul a:hover {
+  filter: brightness(0.7);
+}
+
+.index-content {
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: 1.5rem;
+}
+.index-content a {
+  text-decoration: none;
+  color: var(--dark-color);
+}
+.index-content hr {
+  border-color: var(--light-color);
+}
+
+/*# sourceMappingURL=style.css.map */
