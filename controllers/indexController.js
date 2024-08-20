@@ -9,7 +9,7 @@ const messages = [
   },
   {
     id: uuid(),
-    text: 'I have no interest in you whatsoever.',
+    text: "It's mini, there are messages and boards, luckily those are two of my favourite things.",
     user: 'Miho',
     added: new Date('03-13-2024'),
   },
