@@ -8,7 +8,16 @@
       <% messages.forEach((message) => { %>
         <a class="index__message-link" href=<%= `/messages/${message.id}` %>>
           <h2 class="index__message-user"><%= message.user %></h2>
-          <div class="index__message-added"><%= message.added.toDateString() %></div>
+          <div class="index__message-added">
+            <%= new Intl.DateTimeFormat('en-GB', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            }).format(message.added) %>
+          </div>
           <p class="index__message-text"><%= message.text %></p>
         </a>
         <hr />

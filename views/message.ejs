@@ -5,7 +5,16 @@
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding message-content">
     <h2 class="page-heading"><%= message.user %></h2>
-    <div class="message-content__added"><%= message.added.toDateString() %></div>
+    <div class="message-content__added">
+      <%= new Intl.DateTimeFormat('en-GB', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      }).format(message.added) %>
+      </div>
     <p class="message-content__text"><%= message.text %></p>
   </div>
 </body>
