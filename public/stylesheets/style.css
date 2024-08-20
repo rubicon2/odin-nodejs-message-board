@@ -136,4 +136,9 @@ button {
   font-weight: 700;
 }
 
+.error-text {
+  color: var(--dark-color);
+  font-style: italic;
+}
+
 /*# sourceMappingURL=style.css.map */
