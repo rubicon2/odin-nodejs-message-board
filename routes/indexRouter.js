@@ -8,5 +8,6 @@ router.get('/', controller.getIndex);
 router.get('/new', controller.getNew);
 router.post('/new', controller.postNew);
 router.get('/messages/:id', controller.getMessage);
+router.delete('/messages/:id', controller.deleteMessage);
 
 module.exports = router;

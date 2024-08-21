@@ -21,6 +21,17 @@ async function getMessage(req, res, next) {
   }
 }
 
+async function deleteMessage(req, res, next) {
+  try {
+    await Message.deleteOne({ _id: req.params.id });
+    // The clientside script will redirect. Couldn't get res.redirect() to work here - req.method seems to be stuck on DELETE.
+    // Even if I change it manually, it still makes a DELETE request.
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
 function getNew(req, res) {
   res.render('form', { title: 'Mini Messageboard' });
 }
@@ -35,4 +46,4 @@ async function postNew(req, res) {
   res.redirect('/');
 }
 
-module.exports = { getIndex, getMessage, getNew, postNew };
+module.exports = { getIndex, getMessage, deleteMessage, getNew, postNew };
