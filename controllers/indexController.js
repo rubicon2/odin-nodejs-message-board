@@ -36,14 +36,18 @@ function getNew(req, res) {
   res.render('form', { title: 'Mini Messageboard' });
 }
 
-async function postNew(req, res) {
-  const { user, text } = req.body;
-  await Message.create({
-    user,
-    text,
-    added: new Date(),
-  });
-  res.redirect('/');
+async function postNew(req, res, next) {
+  try {
+    const { user, text } = req.body;
+    await Message.create({
+      user,
+      text,
+      added: new Date(),
+    });
+    res.redirect('/');
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = { getIndex, getMessage, deleteMessage, getNew, postNew };
