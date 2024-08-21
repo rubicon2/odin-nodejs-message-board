@@ -4,7 +4,12 @@
 <body>
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding message-content">
-    <h2 class="page-heading"><%= message.user %></h2>
+    <header class="message-content__header">
+      <h2 class="page-heading"><%= message.user %></h2>
+      <button class="message-content__delete-button" type="button" onclick="handleDelete(event)" value=<%= message.id %>>
+        <img src="/icons/delete_icon.svg" alt="Delete" />
+      </button>
+    </header>
     <div class="message-content__added">
       <%= new Intl.DateTimeFormat('en-GB', {
         weekday: 'short',
@@ -17,5 +22,14 @@
       </div>
     <p class="message-content__text"><%= message.text %></p>
   </div>
+  <script>
+    async function handleDelete(event) {
+      const id =  event.currentTarget.value;
+      await fetch(`/messages/${id}`, { method: 'delete' });
+      // Would rather do this in indexController with a redirect, but is not working - req.method is stuck on DELETE and the redirect
+      // always makes a DELETE request to '/'. Even if I manually change req.method to GET, it still makes a DELETE request.
+      window.location.href = '/';
+    }
+  </script>
 </body>
 </html>

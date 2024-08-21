@@ -113,6 +113,16 @@ button {
 }
 
 .message-content {
+  .message-content__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .message-content__delete-button {
+    background-color: transparent;
+    border: none;
+  }
+
   .message-content__added {
     color: var(--dark-color);
     font-size: 0.95rem;
