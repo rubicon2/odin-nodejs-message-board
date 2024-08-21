@@ -143,6 +143,12 @@ button {
   font-size: 1.1rem;
   font-weight: 700;
 }
+.new-message-content .new-message-content__form button:hover {
+  filter: brightness(0.8);
+}
+.new-message-content .new-message-content__form button:active {
+  filter: brightness(0.5);
+}
 
 .error-text {
   color: var(--dark-color);
