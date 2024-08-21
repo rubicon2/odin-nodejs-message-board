@@ -1,8 +1,11 @@
 const express = require('express');
 const indexRouter = require('./routes/indexRouter');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
+
+mongoose.connect(process.env.DB);
 
 const app = express();
 app.set('view engine', 'ejs');
