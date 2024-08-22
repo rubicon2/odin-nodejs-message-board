@@ -5,7 +5,7 @@
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding new-message-content">
     <h2 class="page-heading">New Message</h2>
-    <form action="new" method="post" class="new-message-content__form">
+    <form action="new" method="post" class="new-message-content__form" onsubmit="checkForm(event)">
       <div class="form-row">
         <label for="name">Name:</label>
         <input type="text" id="name" name="user" required>
@@ -19,5 +19,11 @@
       </div>
     </form>
   </div>
+  <script>
+    function checkForm(event) {
+      // Check for bad words before sending to server.
+      console.log(event);
+    }
+  </script>
 </body>
 </html>

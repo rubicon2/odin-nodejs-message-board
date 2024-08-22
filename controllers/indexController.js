@@ -1,4 +1,5 @@
-const Message = require('../models/Message');
+import Message from '../models/Message.js';
+import { Filter } from 'bad-words';
 
 async function getIndex(req, res, next) {
   try {
@@ -39,15 +40,24 @@ function getNew(req, res) {
 async function postNew(req, res, next) {
   try {
     const { user, text } = req.body;
-    await Message.create({
-      user,
-      text,
-      added: new Date(),
-    });
-    res.redirect('/');
+    const filter = new Filter();
+    if (filter.isProfane(user) || filter.isProfane(text)) {
+      res.render('rejected', {
+        user: filter.clean(user),
+        text: filter.clean(text),
+        title: 'Message rejected',
+      });
+    } else {
+      await Message.create({
+        user,
+        text,
+        added: new Date(),
+      });
+      res.redirect('/');
+    }
   } catch (error) {
     next(error);
   }
 }
 
-module.exports = { getIndex, getMessage, deleteMessage, getNew, postNew };
+export { getIndex, getMessage, deleteMessage, getNew, postNew };
