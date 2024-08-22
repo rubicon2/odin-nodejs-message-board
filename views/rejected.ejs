@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<body>
+  <%- include('partials/nav') %>
+  <div class="container std-vertical-padding new-message-content">
+    <h2 class="page-heading">New Message</h2>
+    <p>Message rejected due to offensive language: <%= `${user}, ${text}` %></p>
+  </div>
+</body>
+</html>

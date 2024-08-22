@@ -40,12 +40,21 @@ function getNew(req, res) {
 async function postNew(req, res, next) {
   try {
     const { user, text } = req.body;
-    await Message.create({
-      user,
-      text,
-      added: new Date(),
-    });
-    res.redirect('/');
+    const filter = new Filter();
+    if (filter.isProfane(user) || filter.isProfane(text)) {
+      res.render('rejected', {
+        user: filter.clean(user),
+        text: filter.clean(text),
+        title: 'Message rejected',
+      });
+    } else {
+      await Message.create({
+        user,
+        text,
+        added: new Date(),
+      });
+      res.redirect('/');
+    }
   } catch (error) {
     next(error);
   }
