@@ -13,11 +13,8 @@
       %>
       <% let htmlStr = ''; %>
       <% for (let i = 0, previousCensored = false; i < wholeString.length; i++) { %>
-        <% if (!previousCensored && censoredIndexes[i]) { %>
-          <% htmlStr += '<span class="bad-word">' %>
-        <% } else if (previousCensored && !censoredIndexes[i]) { %>
-          <% htmlStr += '</span>' %>
-        <% } %>
+        <% if (!previousCensored && censoredIndexes[i]) htmlStr += '<span class="bad-word">' %>
+        <% if (previousCensored && !censoredIndexes[i]) htmlStr += '</span>' %>
         <% htmlStr += wholeString[i] %>
         <% if (previousCensored && i === wholeString.length - 1) htmlStr += '</span>' %>
         <% previousCensored = censoredIndexes[i] %>
