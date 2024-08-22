@@ -41,6 +41,11 @@ button {
   color: var(--dark-color);
 }
 
+.bad-word {
+  color: red;
+  text-decoration: underline;
+}
+
 // || Specific classes
 .main-nav-background {
   background-color: var(--dark-color);

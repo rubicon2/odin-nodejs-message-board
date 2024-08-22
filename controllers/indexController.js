@@ -43,8 +43,10 @@ async function postNew(req, res, next) {
     const filter = new Filter();
     if (filter.isProfane(user) || filter.isProfane(text)) {
       res.render('rejected', {
-        user: filter.clean(user),
-        text: filter.clean(text),
+        user,
+        text,
+        cleanUser: filter.clean(user),
+        cleanText: filter.clean(text),
         title: 'Message rejected',
       });
     } else {

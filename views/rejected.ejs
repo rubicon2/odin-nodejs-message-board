@@ -5,7 +5,23 @@
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding new-message-content">
     <h2 class="page-heading">New Message</h2>
-    <p>Message rejected due to offensive language: <%= `${user}, ${text}` %></p>
+    <p>Message rejected due to offensive language:
+      <%
+        const wholeString = `${user}, ${text}`;
+        const cleanString = `${cleanUser}, ${cleanText}`;
+        const censoredIndexes = wholeString.split('').map((char, i) => char !== cleanString[i]);
+      %>
+      <% for (let i = 0, previousCensored = false; i < wholeString.length; i++) { %>
+        <% if (!previousCensored && censoredIndexes[i]) { %>
+          <span class="bad-word">
+        <% } %>
+        <%= wholeString[i] %>
+        <% if (previousCensored && !censoredIndexes[i]) { %>
+          </span>
+        <% } %>
+        <% previousCensored = censoredIndexes[i] %>
+      <% } %>
+    </p>
   </div>
 </body>
 </html>
