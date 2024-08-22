@@ -4,7 +4,7 @@
 <body>
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding new-message-content">
-    <h2 class="page-heading">New Message</h2>
+    <h2 class="page-heading">Message Rejected</h2>
     <p>Message rejected due to offensive language:
       <%
         const wholeString = `${user}, ${text}`;
@@ -23,7 +23,9 @@
         <% if (previousCensored && i === wholeString.length - 1) htmlStr += '</span>' %>
         <% previousCensored = censoredIndexes[i] %>
       <% } %>
-      <%- htmlStr %>
+      <i>
+        <%- htmlStr %>
+      </i>
     </p>
   </div>
 </body>
