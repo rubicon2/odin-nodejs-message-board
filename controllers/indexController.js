@@ -1,4 +1,5 @@
-const Message = require('../models/Message');
+import Message from '../models/Message.js';
+import { Filter } from 'bad-words';
 
 async function getIndex(req, res, next) {
   try {
@@ -50,4 +51,4 @@ async function postNew(req, res, next) {
   }
 }
 
-module.exports = { getIndex, getMessage, deleteMessage, getNew, postNew };
+export { getIndex, getMessage, deleteMessage, getNew, postNew };

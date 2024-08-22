@@ -1,5 +1,5 @@
-const express = require('express');
-const controller = require('../controllers/indexController');
+import express from 'express';
+import * as controller from '../controllers/indexController.js';
 
 const router = new express.Router();
 router.use(express.urlencoded({ extended: true }));
@@ -10,4 +10,4 @@ router.post('/new', controller.postNew);
 router.get('/messages/:id', controller.getMessage);
 router.delete('/messages/:id', controller.deleteMessage);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,8 @@
-const express = require('express');
-const indexRouter = require('./routes/indexRouter');
-const mongoose = require('mongoose');
-require('dotenv').config();
+import express from 'express';
+import { default as indexRouter } from './routes/indexRouter.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
