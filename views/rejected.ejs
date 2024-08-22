@@ -12,7 +12,6 @@
         const censoredIndexes = wholeString.split('').map((char, i) => char !== cleanString[i]);
       %>
       <% let htmlStr = ''; %>
-      <% console.log(censoredIndexes.map((isCensored, index) => ({ index, char: wholeString[index], isCensored }))); %>
       <% for (let i = 0, previousCensored = false; i < wholeString.length; i++) { %>
         <% if (!previousCensored && censoredIndexes[i]) { %>
           <% htmlStr += '<span class="bad-word">' %>
