@@ -11,16 +11,19 @@
         const cleanString = `${cleanUser}, ${cleanText}`;
         const censoredIndexes = wholeString.split('').map((char, i) => char !== cleanString[i]);
       %>
+      <% let htmlStr = ''; %>
+      <% console.log(censoredIndexes.map((isCensored, index) => ({ index, char: wholeString[index], isCensored }))); %>
       <% for (let i = 0, previousCensored = false; i < wholeString.length; i++) { %>
         <% if (!previousCensored && censoredIndexes[i]) { %>
-          <span class="bad-word">
+          <% htmlStr += '<span class="bad-word">' %>
+        <% } else if (previousCensored && !censoredIndexes[i]) { %>
+          <% htmlStr += '</span>' %>
         <% } %>
-        <%= wholeString[i] %>
-        <% if (previousCensored && !censoredIndexes[i]) { %>
-          </span>
-        <% } %>
+        <% htmlStr += wholeString[i] %>
+        <% if (previousCensored && i === wholeString.length - 1) htmlStr += '</span>' %>
         <% previousCensored = censoredIndexes[i] %>
       <% } %>
+      <%- htmlStr %>
     </p>
   </div>
 </body>
