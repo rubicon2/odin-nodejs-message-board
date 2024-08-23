@@ -42,13 +42,10 @@ async function postNew(req, res, next) {
     const { user, text } = req.body;
     const filter = new Filter();
     if (filter.isProfane(user) || filter.isProfane(text)) {
-      res.render('rejected', {
-        user,
-        text,
-        cleanUser: filter.clean(user),
-        cleanText: filter.clean(text),
-        title: 'Message rejected',
-      });
+      // Is there a better way to get this information to the rejected route?
+      res.redirect(
+        `/new/rejected?user=${user}&text=${text}&cleanUser=${filter.clean(user)}&cleanText=${filter.clean(text)}`,
+      );
     } else {
       await Message.create({
         user,
@@ -62,4 +59,15 @@ async function postNew(req, res, next) {
   }
 }
 
-export { getIndex, getMessage, deleteMessage, getNew, postNew };
+function getRejected(req, res) {
+  const { user, text, cleanUser, cleanText } = req.query;
+  res.render('rejected', {
+    user,
+    text,
+    cleanUser,
+    cleanText,
+    title: 'Message rejected',
+  });
+}
+
+export { getIndex, getMessage, deleteMessage, getNew, postNew, getRejected };
