@@ -38,18 +38,23 @@ function getNew(req, res) {
   res.render('form', { title: 'Mini Messageboard' });
 }
 
+const filter = new Filter();
 const validateNew = [
   body('user')
     .trim()
     .notEmpty()
-    .withMessage('Name cannot be empty.')
+    .withMessage('Name field cannot be empty')
     .isAlpha()
-    .withMessage('Name must use alphabetical characters only.')
+    .withMessage('Name field must use alphabetical characters only')
+    .custom((value) => !filter.isProfane(value))
+    .withMessage('Name field contained offensive language')
     .escape(),
   body('text')
     .trim()
     .notEmpty()
-    .withMessage('Message cannot be empty.')
+    .withMessage('Message field cannot be empty')
+    .custom((value) => !filter.isProfane(value))
+    .withMessage('Message field contained offensive language')
     .escape(),
 ];
 
@@ -57,19 +62,17 @@ const postNew = [
   validateNew,
   async (req, res, next) => {
     try {
-      const validationErrors = validationResult(req);
+      const result = validationResult(req);
       const { user, text } = req.body;
-      const filter = new Filter();
-      if (!validationErrors.isEmpty()) {
-        res.status(400).render('validationError', {
-          errors: validationErrors.array(),
+      if (!result.isEmpty()) {
+        res.status(400).render('rejected', {
+          errors: result.array(),
+          user,
+          text,
+          cleanUser: filter.clean(user),
+          cleanText: filter.clean(text),
           title: 'Message rejected',
         });
-      } else if (filter.isProfane(user) || filter.isProfane(text)) {
-        // Is there a better way to get this information to the rejected route?
-        res.redirect(
-          `/new/rejected?user=${user}&text=${text}&cleanUser=${filter.clean(user)}&cleanText=${filter.clean(text)}`,
-        );
       } else {
         await Message.create({
           user,

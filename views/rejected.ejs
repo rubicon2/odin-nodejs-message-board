@@ -5,23 +5,41 @@
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding new-message-content">
     <h2 class="page-heading">Message Rejected</h2>
-    <p>Message rejected due to offensive language:
+    <p>Message rejected due to the following errors:
       <%
-        const wholeString = `${user}, ${text}`;
-        const cleanString = `${cleanUser}, ${cleanText}`;
-        const censoredIndexes = wholeString.split('').map((char, i) => char !== cleanString[i]);
+        function getCensoredIndexes(originalStr, cleanStr) {
+          return originalStr.split('').map((char, i) => char !== cleanStr[i]);
+        }
+
+        function getFormattedRudeString(str, censoredIndexes, censoredClass) {
+          let html = '';
+          for (let i = 0, previousCensored = false; i < str.length; i++) {
+            if (!previousCensored && censoredIndexes[i]) html += `\<span class="${censoredClass}">`;
+            if (previousCensored && !censoredIndexes[i]) html += '\</span>';
+            html += str[i];
+            if (previousCensored && i === str.length - 1) html += '\</span>';
+            previousCensored = censoredIndexes[i];
+          }
+          return html;
+        }
+        const censoredUserIndexes = getCensoredIndexes(user, cleanUser);
+        const censoredTextIndexes = getCensoredIndexes(text, cleanText);
+        const userErrorHtml = getFormattedRudeString(user, censoredUserIndexes, 'bad-word');
+        const textErrorHtml = getFormattedRudeString(text, censoredTextIndexes, 'bad-word');
       %>
-      <% let htmlStr = ''; %>
-      <% for (let i = 0, previousCensored = false; i < wholeString.length; i++) { %>
-        <% if (!previousCensored && censoredIndexes[i]) htmlStr += '<span class="bad-word">' %>
-        <% if (previousCensored && !censoredIndexes[i]) htmlStr += '</span>' %>
-        <% htmlStr += wholeString[i] %>
-        <% if (previousCensored && i === wholeString.length - 1) htmlStr += '</span>' %>
-        <% previousCensored = censoredIndexes[i] %>
-      <% } %>
-      <i>
-        <%- htmlStr %>
-      </i>
+      <ul>
+        <!-- How to tell the difference between different errors on the same path, and append errorHtml only on the relevant error (i.e. bad language)? -->
+         <!-- The only things I can think of are bone-headed. -->
+        <% for (const error of errors) { %>
+          <% if (error.path === 'user' && error.msg.includes('offensive')) { %>
+            <li><%= error.msg %>: <i><%- userErrorHtml %></i></li>
+          <% } else if (error.path === 'text' && error.msg.includes('offensive')) { %>
+            <li><%= error.msg %>: <i><%- textErrorHtml %></i></li>
+          <% } else { %>
+            <li><%= error.msg %></li>
+          <% } %>
+        <% } %>
+      </ul>
     </p>
   </div>
 </body>
