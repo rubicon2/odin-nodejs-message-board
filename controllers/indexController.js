@@ -1,5 +1,6 @@
 import Message from '../models/Message.js';
 import { Filter } from 'bad-words';
+import { body, validationResult } from 'express-validator';
 
 async function getIndex(req, res, next) {
   try {
@@ -37,29 +38,64 @@ function getNew(req, res) {
   res.render('form', { title: 'Mini Messageboard' });
 }
 
-async function postNew(req, res, next) {
-  try {
-    const { user, text } = req.body;
-    const filter = new Filter();
-    if (filter.isProfane(user) || filter.isProfane(text)) {
-      res.render('rejected', {
-        user,
-        text,
-        cleanUser: filter.clean(user),
-        cleanText: filter.clean(text),
-        title: 'Message rejected',
-      });
-    } else {
-      await Message.create({
-        user,
-        text,
-        added: new Date(),
-      });
-      res.redirect('/');
+const filter = new Filter();
+const validateNew = [
+  body('user')
+    .trim()
+    .notEmpty()
+    .withMessage('Name field cannot be empty')
+    .isAlpha()
+    .withMessage('Name field must use alphabetical characters only')
+    .custom((value) => !filter.isProfane(value))
+    .withMessage('Name field contained offensive language')
+    .escape(),
+  body('text')
+    .trim()
+    .notEmpty()
+    .withMessage('Message field cannot be empty')
+    .custom((value) => !filter.isProfane(value))
+    .withMessage('Message field contained offensive language')
+    .escape(),
+];
+
+const postNew = [
+  validateNew,
+  async (req, res, next) => {
+    try {
+      const result = validationResult(req);
+      const { user, text } = req.body;
+      if (!result.isEmpty()) {
+        res.status(400).render('rejected', {
+          errors: result.array(),
+          user,
+          text,
+          cleanUser: filter.clean(user),
+          cleanText: filter.clean(text),
+          title: 'Message rejected',
+        });
+      } else {
+        await Message.create({
+          user,
+          text,
+          added: new Date(),
+        });
+        res.redirect('/');
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
-  }
+  },
+];
+
+function getRejected(req, res) {
+  const { user, text, cleanUser, cleanText } = req.query;
+  res.render('rejected', {
+    user,
+    text,
+    cleanUser,
+    cleanText,
+    title: 'Message rejected',
+  });
 }
 
-export { getIndex, getMessage, deleteMessage, getNew, postNew };
+export { getIndex, getMessage, deleteMessage, getNew, postNew, getRejected };
