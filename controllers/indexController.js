@@ -1,5 +1,6 @@
 import Message from '../models/Message.js';
 import { Filter } from 'bad-words';
+import { body, validationResult } from 'express-validator';
 
 async function getIndex(req, res, next) {
   try {
@@ -37,27 +38,51 @@ function getNew(req, res) {
   res.render('form', { title: 'Mini Messageboard' });
 }
 
-async function postNew(req, res, next) {
-  try {
-    const { user, text } = req.body;
-    const filter = new Filter();
-    if (filter.isProfane(user) || filter.isProfane(text)) {
-      // Is there a better way to get this information to the rejected route?
-      res.redirect(
-        `/new/rejected?user=${user}&text=${text}&cleanUser=${filter.clean(user)}&cleanText=${filter.clean(text)}`,
-      );
-    } else {
-      await Message.create({
-        user,
-        text,
-        added: new Date(),
-      });
-      res.redirect('/');
+const validateNew = [
+  body('user')
+    .trim()
+    .notEmpty()
+    .withMessage('Name cannot be empty.')
+    .isAlpha()
+    .withMessage('Name must use alphabetical characters only.')
+    .escape(),
+  body('text')
+    .trim()
+    .notEmpty()
+    .withMessage('Message cannot be empty.')
+    .escape(),
+];
+
+const postNew = [
+  validateNew,
+  async (req, res, next) => {
+    try {
+      const validationErrors = validationResult(req);
+      const { user, text } = req.body;
+      const filter = new Filter();
+      if (!validationErrors.isEmpty()) {
+        res.status(400).render('validationError', {
+          errors: validationErrors.array(),
+          title: 'Message rejected',
+        });
+      } else if (filter.isProfane(user) || filter.isProfane(text)) {
+        // Is there a better way to get this information to the rejected route?
+        res.redirect(
+          `/new/rejected?user=${user}&text=${text}&cleanUser=${filter.clean(user)}&cleanText=${filter.clean(text)}`,
+        );
+      } else {
+        await Message.create({
+          user,
+          text,
+          added: new Date(),
+        });
+        res.redirect('/');
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
-  }
-}
+  },
+];
 
 function getRejected(req, res) {
   const { user, text, cleanUser, cleanText } = req.query;
