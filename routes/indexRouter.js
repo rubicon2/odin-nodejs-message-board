@@ -9,6 +9,6 @@ router.get('/new', controller.getNew);
 router.post('/new', controller.postNew);
 router.get('/new/rejected', controller.getRejected);
 router.get('/messages/:id', controller.getMessage);
-router.delete('/messages/:id', controller.deleteMessage);
+router.get('/delete/:id', controller.deleteMessage);
 
 export default router;

@@ -23,9 +23,7 @@ async function getMessage(req, res, next) {
 async function deleteMessage(req, res, next) {
   try {
     await db.deleteMessage(req.params.id);
-    // The clientside script will redirect. Couldn't get res.redirect() to work here - req.method seems to be stuck on DELETE.
-    // Even if I change it manually, it still makes a DELETE request.
-    next();
+    res.status(303).redirect('/');
   } catch (error) {
     next(error);
   }
