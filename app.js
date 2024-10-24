@@ -1,12 +1,9 @@
 import express from 'express';
 import { default as indexRouter } from './routes/indexRouter.js';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-
-mongoose.connect(process.env.DB);
 
 const app = express();
 app.set('view engine', 'ejs');

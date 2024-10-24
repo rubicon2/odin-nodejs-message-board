@@ -7,7 +7,7 @@
     <div class="container std-vertical-padding index-content">
       <% messages.forEach((message) => { %>
         <a class="index__message-link" href=<%= `/messages/${message.id}` %>>
-          <h2 class="index__message-user"><%= message.user %></h2>
+          <h2 class="index__message-user"><%= message.username %></h2>
           <div class="index__message-added">
             <%= new Intl.DateTimeFormat('en-GB', {
               weekday: 'short',
