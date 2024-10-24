@@ -1,11 +1,10 @@
-import Message from '../models/Message.js';
+import * as db from '../db/queries.js';
 import { Filter } from 'bad-words';
 import { body, validationResult } from 'express-validator';
 
 async function getIndex(req, res, next) {
   try {
-    // find (and sort) returns a query, but exec() turns it into a promise. Works without exec, but using it anyway as I know what to expect with promises!
-    const messages = await Message.find({}).sort({ added: 'desc' }).exec();
+    const messages = await db.getAllMessages();
     res.render('index', { messages, title: 'Mini Messageboard' });
   } catch (error) {
     next(error);
@@ -13,10 +12,8 @@ async function getIndex(req, res, next) {
 }
 
 async function getMessage(req, res, next) {
-  const { id } = req.params;
   try {
-    // findById returns a query, but exec() turns it into a promise. Works without exec, but using it anyway as I know what to expect with promises!
-    const message = await Message.findById(id).exec();
+    const message = await db.getMessage(req.params.id);
     res.render('message', { message, title: `Message by ${message.user}` });
   } catch (error) {
     next(error);
@@ -25,7 +22,7 @@ async function getMessage(req, res, next) {
 
 async function deleteMessage(req, res, next) {
   try {
-    await Message.deleteOne({ _id: req.params.id });
+    await db.deleteMessage(req.params.id);
     // The clientside script will redirect. Couldn't get res.redirect() to work here - req.method seems to be stuck on DELETE.
     // Even if I change it manually, it still makes a DELETE request.
     next();
@@ -74,11 +71,7 @@ const postNew = [
           title: 'Message rejected',
         });
       } else {
-        await Message.create({
-          user,
-          text,
-          added: new Date(),
-        });
+        await db.createMessage(user, text, new Date());
         res.redirect('/');
       }
     } catch (error) {

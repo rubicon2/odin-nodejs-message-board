@@ -5,7 +5,7 @@
   <%- include('partials/nav') %>
   <div class="container std-vertical-padding message-content">
     <header class="message-content__header">
-      <h2 class="page-heading"><%= message.user %></h2>
+      <h2 class="page-heading"><%= message.username %></h2>
       <button class="message-content__delete-button" type="button" onclick="handleDelete(event)" value=<%= message.id %>>
         <img src="/icons/delete_icon.svg" alt="Delete" />
       </button>
